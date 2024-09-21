@@ -1,0 +1,422 @@
+/* Global styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.logo {
+  display: block;
+  width: 200px; /* Adjust the width as needed */
+  height: 50px; /* Preserve the aspect ratio of the logo */
+  padding: 7px; /* Adjust the margin as needed */
+  border-radius: 10px;
+}
+
+nav {
+  background-color: #333;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+}
+
+nav ul li a {
+  color: #fff;
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+nav ul li a:hover {
+  background-color: #fff;
+  color: #333;
+}
+
+nav ul li.active a {
+  background-color: #fff;
+  color: #333;
+}
+
+/* Additional CSS styles */
+#admin-menu {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  list-style: none;
+  padding: 10px;
+  margin-top: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+nav ul li:hover #admin-menu {
+  display: block;
+}
+
+#admin-menu li {
+  margin-bottom: 5px;
+}
+
+#admin-menu a {
+  display: block;
+  text-decoration: none;
+  color: #333;
+}
+
+#admin-menu a:hover {
+  text-decoration: underline;
+}
+
+section {
+  padding: 25px;
+}
+
+h1,
+h2,
+h3 {
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: #333;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #fff;
+  color: #333;
+}
+
+/* Homepage styles */
+#home {
+  background-image: url("homebg4.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+}
+
+#home header {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  text-align: center;
+}
+
+#home h1 {
+  color: #fff;
+  font-size: 3em;
+  text-shadow: 2px 2px #333;
+}
+
+#home p {
+  color: #fff;
+  font-size: 1.5em;
+  margin-bottom: 40px;
+  text-shadow: 2px 2px #333;
+}
+
+#home button {
+  margin-top: 40px;
+}
+
+#services {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.service {
+  float: left;
+  width: 50%;
+  padding: 5px;
+}
+
+.service img {
+  width: 100px;
+  height: 200px;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Track Order styles */
+#track-order {
+  background-color: #f9f9f9;
+  padding: 50px 0;
+}
+
+#track-order h2 {
+  margin-bottom: 0px;
+  margin-top: -30px;
+}
+
+#track-order p {
+  margin-bottom: 20px;
+}
+
+#track-order form {
+  margin-bottom: 20px;
+}
+
+#track-order input[type="text"] {
+  border: none;
+  border-radius: 5px;
+  box-shadow: 2px 2px #333;
+  font-size: 16px;
+  padding: 10px;
+  width: 50%;
+  max-width: 400px;
+}
+
+#track-order button {
+  background-color: #333;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  margin-left: 10px;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+}
+
+#track-order button:hover {
+  background-color: #fff;
+  color: #333;
+}
+
+#track-order img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+}
+#track-order h2{ 
+  text-align: center;
+}
+
+#track-order h2 p a {
+  color: #333;
+  text-decoration: none;
+  padding: 20px;
+}
+
+#about {
+  background-color: #f5f5f5;
+  padding: 20px;
+  margin-top: 50px;
+}
+#about h2{
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+  font-size: 36px;
+}
+
+h3 {
+  font-size: 24px;
+}
+
+ul {
+  list-style: none;
+}
+
+p {
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+pre {
+  font-size: 18px;
+  line-height: 1.5;
+  font-family: Arial;
+}
+
+#contact {
+  background-color: #f9f9f9;
+  padding: 50px 0;
+  text-align: center;
+}
+
+.contact-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contact-info {
+  flex: 1;
+  margin-right: 50px;
+}
+
+.contact-image {
+  flex: 1;
+  text-align: center;
+}
+
+.contact-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.contact-details {
+  margin-top: 50px;
+  text-align: center;
+}
+
+#contact h2 {
+  margin-bottom: 20px;
+  margin-left: 450px;
+}
+
+#contact form {
+  margin-bottom: 20px;
+}
+
+#contact .form-group {
+  margin-bottom: 20px;
+}
+
+#contact label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+#contact input[type="text"],
+#contact input[type="email"],
+#contact textarea {
+  border: none;
+  border-radius: 5px;
+  box-shadow: 2px 2px #333;
+  font-size: 16px;
+  padding: 10px;
+  width: 100%;
+  max-width: 400px;
+}
+
+#contact textarea {
+  height: 150px;
+}
+
+#contact button {
+  background-color: #333;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+}
+
+#contact button:hover {
+  background-color: #fff;
+  color: #333;
+}
+
+#contact p {
+  margin-bottom: 20px;
+}
+
+#contact ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+#contact ul li {
+  margin-bottom: 10px;
+}
+
+/* Contact Us Section */
+#contact h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#contact form {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#contact .form-group {
+  margin-bottom: 20px;
+}
+
+#contact label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+#contact input[type="text"],
+#contact input[type="email"],
+#contact textarea {
+  border: none;
+  border-radius: 5px;
+  box-shadow: 2px 2px #333;
+  font-size: 16px;
+  padding: 10px;
+  width: 100%;
+  max-width: 400px;
+}
+
+#contact textarea {
+  height: 150px;
+}
+
+#contact button {
+  background-color: #333;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+}
+
+#contact button:hover {
+  background-color: #fff;
+  color: #333;
+}
+
+#contact p {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#contact ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+#contact ul li {
+  margin-bottom: 10px;
+}

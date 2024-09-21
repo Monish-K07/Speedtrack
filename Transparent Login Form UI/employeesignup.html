@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Transparent employee Signup Form UI</title>
+    <link rel="stylesheet" href="signup.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  </head>
+  <body>
+    <div class="bg-img">
+      <div class="content">
+        <header>Employee Sign Up </header>
+        <form action="#">
+          <div class="field">
+            <span class="fa fa-user"></span>
+            <input type="text" required placeholder="Username">
+          </div>
+          <div class="field">
+            <span class="fa fa-envelope"></span>
+            <input type="email" required placeholder="Email">
+          </div>
+          <div class="field">
+            <span class="fa fa-lock"></span>
+            <input type="password" class="pass-key" required placeholder="Password">
+            <span class="show">SHOW</span>
+          </div>
+          <div class="field">
+            <span class="fa fa-lock"></span>
+            <input type="password" class="pass-key" required placeholder="Confirm Password">
+            <span class="show">SHOW</span>
+          </div>
+          <div class="field">
+            <input type="submit" value="SIGN UP">
+          </div>
+        </form>
+        <div class="login">Already have an account? <a href="emploeelogin.html" target="_self">Log In</a></div>
+      </div>
+    </div>
+
+    <script>
+      const pass_fields = document.querySelectorAll('.pass-key');
+      const showBtns = document.querySelectorAll('.show');
+      showBtns.forEach((showBtn, index) => {
+        showBtn.addEventListener('click', function(){
+         if(pass_fields[index].type === "password"){
+           pass_fields[index].type = "text";
+           showBtn.textContent = "HIDE";
+           showBtn.style.color = "#3498db";
+         }else{
+           pass_fields[index].type = "password";
+           showBtn.textContent = "SHOW";
+           showBtn.style.color = "#222";
+         }
+        });
+      });
+    </script>
+  </body>
+</html>

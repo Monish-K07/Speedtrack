@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Domestic Consignment</title>
+  <link rel="stylesheet" href="domestic-consignment.css">
+  <style>
+    /* Add overlay styles */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%; 
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none; /* Initially hide the overlay */
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .overlay-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .overlay-input {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="loginbg.jpeg" alt="Logo" class="logo">
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Logout</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="content">
+      <h1>Send from your location, to anywhere within your country</h1>
+      <p>Break the traditional courier cycle with Speedtrack's Direct’s doorstep pickup</p>
+
+      <h2>Features:</h2>
+      <ul>
+        <li><img src="debit-card.png" alt="Icon" class="icon"> Multiple payment options</li>
+        <li><img src="tracking.jpg" alt="Icon" class="icon"> Real-time tracking</li>
+        <li><img src="delivery-man.png" alt="Icon" class="icon"> Hassle-free pick-up</li>
+        <li><img src="delivery-truck.png" alt="Icon" class="icon"> Faster, safer delivery</li>
+      </ul>
+    </div>
+
+    <div class="form-container">
+      <h2>Consignment Details</h2>
+      <form id="consignment-form" method="POST" action="process-consignment.php">
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country" required><br><br>
+
+        <label for="pickup-pincode">Pickup Pincode:</label>
+        <input type="text" id="pickup-pincode" name="pickup-pincode" maxlength="6" required><br><br>
+
+        <label for="delivery-pincode">Delivery Pincode:</label>
+        <input type="text" id="delivery-pincode" name="delivery-pincode" maxlength="6" required><br><br>
+
+        <button type="submit" id="proceed-btn">Proceed</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div id="overlay" class="overlay">
+    <div class="overlay-content">
+      <h2>Enter your mobile number</h2>
+      <p>We'll send you an OTP via SMS to confirm your mobile number.</p>
+      <div class="overlay-input">
+        <input type="text" id="mobile-number" placeholder="+91" required>
+      </div>
+      <button type="button" id="get-otp-btn">Get OTP</button>
+    </div>
+  </div>
+
+  <!-- OTP Overlay -->
+  <div id="otp-overlay" class="overlay">
+    <div class="overlay-content">
+      <h2>Enter the OTP</h2>
+      <p>Please enter the 6-digit OTP received on your mobile number.</p>
+      <div class="overlay-input">
+        <input type="text" id="otp" placeholder="Enter OTP" required>
+      </div>
+      <button type="button" id="submit-otp-btn">Submit</button>
+    </div>
+  </div>
+
+  <script>
+   // Get the necessary elements
+const proceedBtn = document.getElementById('proceed-btn');
+const overlay = document.getElementById('overlay');
+const mobileNumberInput = document.getElementById('mobile-number');
+const getOtpBtn = document.getElementById('get-otp-btn');
+const otpOverlay = document.getElementById('otp-overlay');
+const otpInput = document.getElementById('otp');
+const submitOtpBtn = document.getElementById('submit-otp-btn');
+
+// Add event listener to the Proceed button
+proceedBtn.addEventListener('click', function(event) {
+  event.preventDefault(); // Prevent the form from submitting
+  overlay.style.display = 'flex'; // Display the overlay
+});
+
+// Function to validate mobile number
+function validateMobileNumber(mobileNumber) {
+  const regex = /^\d{10}$/;
+  return regex.test(mobileNumber);
+}
+
+// Function to send OTP
+function sendOTP(mobileNumber) {
+  // Implement the logic to send OTP to the provided mobile number
+  // You can use an API or any other method to send the OTP
+  // Here, we'll simulate the process by logging the OTP to the console
+  const otp = Math.floor(100000 + Math.random() * 900000); // Generate a random 6-digit OTP
+  console.log(`OTP sent to ${mobileNumber}: ${otp}`);
+
+  // Store the consignment details in localStorage
+  const consignmentDetails = {
+    country: document.getElementById('country').value,
+    pickupPincode: document.getElementById('pickup-pincode').value,
+    deliveryPincode: document.getElementById('delivery-pincode').value
+  };
+  localStorage.setItem('consignmentDetails', JSON.stringify(consignmentDetails));
+
+  // Show the OTP overlay
+  overlay.style.display = 'none'; // Hide the mobile number overlay
+  otpOverlay.style.display = 'flex'; // Display the OTP overlay
+}
+
+// Add event listener to the Get OTP button
+getOtpBtn.addEventListener('click', function() {
+  const mobileNumber = mobileNumberInput.value;
+
+  // Validate the mobile number
+  if (!validateMobileNumber(mobileNumber)) {
+    alert('Invalid mobile number. Please enter a 10-digit mobile number.');
+    return;
+  }
+
+  sendOTP(mobileNumber);
+});
+
+// Add event listener to the Submit OTP button
+submitOtpBtn.addEventListener('click', function() {
+  const enteredOtp = otpInput.value;
+  const otp = Math.floor(100000 + Math.random() * 900000); // Generate a random 6-digit OTP
+  console.log(`OTP entered: ${enteredOtp}`);
+  console.log(`Generated OTP: ${otp}`);
+
+  // Verify the entered OTP
+  if (enteredOtp === '123456') {
+    console.log("OTP verification successful. Proceed to the next stage.");
+
+    // Redirect to the address-page.html
+    window.location.href = "address-page.html";
+  } else {
+    alert('Incorrect OTP entered. Please try again.');
+  }
+});
+
+// Fetch form data and submit the form
+const consignmentForm = document.getElementById('consignment-form');
+consignmentForm.addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent the form from submitting
+
+  const consignmentDetails = JSON.parse(localStorage.getItem('consignmentDetails'));
+
+  const formData = new FormData();
+  formData.append('country', consignmentDetails.country);
+  formData.append('pickup-pincode', consignmentDetails.pickupPincode);
+  formData.append('delivery-pincode', consignmentDetails.deliveryPincode);
+
+  fetch('process-consignment.php', {
+    method: 'POST',
+    body: formData
+  })
+    .then(response => response.text())
+    .then(data => {
+      console.log(data);
+      // Redirect to the next page or perform further actions
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+});
+  </script>
+</body>
+</html>

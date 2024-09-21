@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>Transparent Signup Form UI</title>
+  <link rel="stylesheet" href="signup.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+<body>
+  <div class="bg-img">
+    <div class="content">
+      <header>Sign Up Form</header>
+      <form id="signup-form" action="signup.php" method="POST">
+        <div class="field">
+          <span class="fa fa-user"></span>
+          <input type="text" name="username" required placeholder="Username">
+        </div>
+        <div class="field">
+          <span class="fa fa-envelope"></span>
+          <input type="email" name="email" required placeholder="Email">
+        </div>
+        <div class="field">
+          <span class="fa fa-lock"></span>
+          <input type="password" name="password" class="pass-key" required placeholder="Password">
+          <span class="show">SHOW</span>
+        </div>
+        <div class="field">
+          <span class="fa fa-lock"></span>
+          <input type="password" name="confirm_password" class="pass-key" required placeholder="Confirm Password">
+          <span class="show">SHOW</span>
+        </div>
+        <div class="field">
+          <input type="submit" value="SIGN UP">
+        </div>
+      </form>
+      <div class="login">Already have an account? <a href="login.html" target="_self">Log In</a></div>
+    </div>
+  </div>
+
+  <script>
+    const pass_fields = document.querySelectorAll('.pass-key');
+    const showBtns = document.querySelectorAll('.show');
+    showBtns.forEach((showBtn, index) => {
+      showBtn.addEventListener('click', function(){
+        if(pass_fields[index].type === "password"){
+          pass_fields[index].type = "text";
+          showBtn.textContent = "HIDE";
+          showBtn.style.color = "#3498db";
+        }else{
+          pass_fields[index].type = "password";
+          showBtn.textContent = "SHOW";
+          showBtn.style.color = "#222";
+        }
+      });
+    });
+  
+    const signupForm = document.getElementById('signup-form');
+    signupForm.addEventListener('submit', function(event) {
+      // Prevents the default form submission
+      event.preventDefault();
+  
+      // Get the form data
+      const formData = new FormData(signupForm);
+  
+      // Make an AJAX request to the PHP script
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "signup.php", true);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          // Handle the response from signup.php
+          console.log(xhr.responseText); // You can remove this line once it's working
+  
+          // Redirect to login.html
+          window.location.href = 'login.html';
+        }
+      };
+      xhr.send(formData);
+    });
+  </script>
+</body>
+</html>

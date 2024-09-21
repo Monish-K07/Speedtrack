@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Address Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+  
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+    }
+  
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+  
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+  
+    .sequence {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      font-weight: bold;
+      flex: 1; /* Added this line */
+    }
+  
+    .sequence-item {
+      position: relative;
+      font-size: 14px;
+      color: #000;
+      display: flex; /* Add display: flex to enable flexbox */
+      flex-direction: column;
+      align-items: center; /* Align items vertically */
+      text-align: center;
+    }
+  
+    .sequence-item::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px; /* Increase the width for larger circles */
+      height: 60px; /* Increase the height for larger circles */
+      border-radius: 50%;
+      background-color: #ccc;
+      z-index: -1;
+    }
+  
+    .sequence-item.current-sequence::before {
+      background-color: #4CAF50;
+    }
+    .sequence span{
+       
+      margin-top: 50px;;
+    }
+  
+    .container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    gap: 20px;
+    padding: 20px; /* Added padding */
+    align-items: stretch;
+  }
+
+  .section {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px;
+    flex: 1;
+    box-sizing: border-box; /* Added box-sizing */
+    height: 400px;
+  }
+
+  .section h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px; /* Updated margin */
+  }
+
+  .section ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  .section li {
+    font-size: 16px;
+    margin-bottom: 10px; /* Updated margin */
+  }
+  .address-input input[type="text"] {
+    width: 100%; /* Set the width to 100% */
+    padding: 10px; /* Add some padding */
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    margin-bottom: 15px;
+  }
+    .tick-mark {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #4CAF50;
+      margin-right: 10px;
+      text-align: center;
+      color: #fff;
+    }
+  
+    .next-btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+     /* Overlay styles */
+     .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+
+    .overlay-content {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      width: 400px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .overlay h2 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .overlay-input input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-top: 5px;
+      margin-bottom: 15px;
+    }
+
+    .overlay-buttons {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .overlay-buttons button {
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <img src="loginbg.jpeg" alt="Logo">
+      <h1>ADDRESS</h1>
+    </div>
+    <div class="sequence">
+      <div class="sequence-item current-sequence"><span>ADDRESS</span></div>
+      <div class="sequence-item"><span>PACKAGE</span></div>
+      <div class="sequence-item"><span>SCHEDULE</span></div>
+      <div class="sequence-item"><span>SUMMARY</span></div>
+    </div>
+  </div>
+  
+  <div class="container">
+  <div class="section" style="width: 400px;">
+    <h2>Address Details</h2>
+      <div class="address-input">
+        <h3>Pickup Address</h3>
+        <input type="text" id="pickup-address" placeholder="Select pickup address" required name="pickup_address">
+      </div>
+      <div class="address-input">
+        <h3>Delivery Address</h3>
+        <input type="text" id="delivery-address" placeholder="Select delivery address" required name="delivery_address">
+      </div>
+      <button type="button" id="next-btn" class="next-btn" href="package.html">Next</button>
+  </div>
+
+  <!-- Pickup Address Overlay -->
+  <div id="pickup-overlay" class="overlay">
+    <div class="overlay-content">
+      <h2>Select Pickup Address</h2>
+      <form id="pickup-address-form" action="pickup-address-handler.php" method="POST">
+        <div class="overlay-input">
+          <h3>Pickup Contact Details</h3>
+          <input type="text" id="contact-name" placeholder="Contact Name" required name="pickup_name">
+          <input type="text" id="mobile-number" placeholder="Mobile Number" required name="pickup_phone">
+          <input type="text" id="email-address" placeholder="Email Address" required name="pickup_email">
+        </div>
+        <div class="overlay-input">
+          <h3>Pickup Address Details</h3>
+          <input type="text" id="flat-housing" placeholder="Flat, Housing No, Building, Apartment" required name="pickup_flat_housing">
+          <input type="text" id="area-street" placeholder="Area, Street, Sector" required name="pickup_area_street">
+          <input type="text" id="pincode" placeholder="Pincode" required name="pickup_pincode">
+          <input type="text" id="city" placeholder="City" required name="pickup_city">
+          <input type="text" id="state" placeholder="State" required name="pickup_state">
+        </div>
+        <div class="overlay-buttons">
+          <button type="submit" id="add-pickup-address-btn">Add Pickup Address</button>
+          <button type="button" id="cancel-pickup-btn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- End of Pickup Address Overlay -->
+
+  <!-- Delivery Address Overlay -->
+  <div id="delivery-overlay" class="overlay">
+    <div class="overlay-content">
+      <h2>Select Delivery Address</h2>
+      <form id="delivery-address-form" method="POST" action="delivery-address-handler.php">
+        <div class="overlay-input">
+          <h3>Delivery Contact Details</h3>
+          <input type="text" id="contact-name-delivery" placeholder="Contact Name" required name="delivery_name">
+          <input type="text" id="mobile-number-delivery" placeholder="Mobile Number" required name="delivery_phone">
+          <input type="text" id="email-address-delivery" placeholder="Email Address" required name="delivery_email">
+        </div>
+        <div class="overlay-input">
+          <h3>Delivery Address Details</h3>
+          <input type="text" id="flat-housing-delivery" placeholder="Flat, Housing No, Building, Apartment" required name="delivery_flat_housing">
+          <input type="text" id="area-street-delivery" placeholder="Area, Street, Sector" required name="delivery_area_street">
+          <input type="text" id="pincode-delivery" placeholder="Pincode" required name="delivery_pincode">
+          <input type="text" id="city-delivery" placeholder="City" required name="delivery_city">
+          <input type="text" id="state-delivery" placeholder="State" required name="delivery_state">
+        </div>
+        <div class="overlay-buttons">
+          <button type="submit" id="add-delivery-address-btn">Add Delivery Address</button>
+          <button type="button" id="cancel-delivery-btn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- End of Delivery Address Overlay -->
+</div>
+
+
+ <div class="section" style="width: 400px;">
+      <h2>Things to Keep in Mind</h2>
+      <ul>
+        <li><strong>Package Weight</strong><br>We only deliver packages up to 10kgs</li>
+        <li><strong>Packaging</strong><br>We do not provide packaging service. Please keep the items packed for our Delivery executive to pick up</li>
+        <li><strong>Restricted/Illegal item</strong><br>Please ensure you are not sending any restricted/illegal item</li>
+        <li><strong>Multiple packages</strong><br>We only allow one box/package/parcel per order</li>
+      </ul>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var addressTick = document.getElementById('address-tick');
+    var pickupAddressInput = document.getElementById('pickup-address');
+    var deliveryAddressInput = document.getElementById('delivery-address');
+    var nextButton = document.getElementById('next-btn');
+    var pickupOverlay = document.getElementById('pickup-overlay');
+    var deliveryOverlay = document.getElementById('delivery-overlay');
+    var addPickupAddressBtn = document.getElementById('add-pickup-address-btn');
+    var addDeliveryAddressBtn = document.getElementById('add-delivery-address-btn');
+    var cancelPickupBtn = document.getElementById('cancel-pickup-btn');
+    var cancelDeliveryBtn = document.getElementById('cancel-delivery-btn');
+    var addressTick = document.getElementById('address-tick');
+
+    nextButton.addEventListener('click', handleNextButtonClick);
+
+    // Function to validate mobile number
+    function validateMobileNumber(number) {
+      return /^\d{10}$/.test(number);
+    }
+
+    // Function to validate email address
+    function validateEmailAddress(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    // Function to validate pincode
+    function validatePincode(pincode) {
+      return /^\d{6}$/.test(pincode);
+    }
+
+    // Function to validate city and state
+    function validateCityState(city, state) {
+      // Example validation logic (modify as per your requirements)
+      const validCities = ['chennai', 'bangalore', 'bhubaneshwar'];
+      const validStates = ['tamilnadu', 'karnataka', 'kerala'];
+
+      return validCities.includes(city.toLowerCase()) && validStates.includes(state.toLowerCase());
+    }
+
+     // Function to handle the next button click
+     function handleNextButtonClick(event) {
+      event.preventDefault();
+
+      // Redirect to the next page (package.html)
+      window.location.href = 'package.html';
+    }
+
+    // Function to show the pickup address overlay
+    function showPickupOverlay() {
+      pickupOverlay.style.display = 'block';
+    }
+
+    // Function to close the pickup address overlay
+    function closePickupOverlay() {
+      pickupOverlay.style.display = 'none';
+    }
+
+    // Function to add the pickup address
+    function addPickupAddress() {
+      var contactName = document.getElementById('contact-name').value;
+      var mobileNumber = document.getElementById('mobile-number').value;
+      var emailAddress = document.getElementById('email-address').value;
+      var flatHousing = document.getElementById('flat-housing').value;
+      var areaStreet = document.getElementById('area-street').value;
+      var pincode = document.getElementById('pincode').value;
+      var city = document.getElementById('city').value;
+      var state = document.getElementById('state').value;
+
+      // Validate mobile number
+      if (!validateMobileNumber(mobileNumber)) {
+        alert('Please enter a valid mobile number.');
+        return;
+      }
+
+      // Validate email address
+      if (!validateEmailAddress(emailAddress)) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+
+      // Validate pincode
+      if (!validatePincode(pincode)) {
+        alert('Please enter a valid pincode.');
+        return;
+      }
+
+      // Validate city and state
+      if (!validateCityState(city, state)) {
+        alert('Please enter a valid city and state.');
+        return;
+      }
+
+      // Update the pickup address input field with the selected address details
+      pickupAddressInput.value =
+        flatHousing + ', ' + areaStreet + ', ' + pincode + ', ' + city + ', ' + state;
+
+      // Close the pickup address overlay
+      closePickupOverlay();
+    }
+
+    // Function to show the delivery address overlay
+    function showDeliveryOverlay() {
+      deliveryOverlay.style.display = 'block';
+    }
+
+    // Function to close the delivery address overlay
+    function closeDeliveryOverlay() {
+      deliveryOverlay.style.display = 'none';
+    }
+
+    // Function to add the delivery address
+    function addDeliveryAddress() {
+      var deliveryContactName = document.getElementById('contact-name-delivery').value;
+      var deliveryMobileNumber = document.getElementById('mobile-number-delivery').value;
+      var deliveryEmailAddress = document.getElementById('email-address-delivery').value;
+      var deliveryFlatHousing = document.getElementById('flat-housing-delivery').value;
+      var deliveryAreaStreet = document.getElementById('area-street-delivery').value;
+      var deliveryPincode = document.getElementById('pincode-delivery').value;
+      var deliveryCity = document.getElementById('city-delivery').value;
+      var deliveryState = document.getElementById('state-delivery').value;
+
+      // Validate mobile number
+      if (!validateMobileNumber(deliveryMobileNumber)) {
+        alert('Please enter a valid mobile number.');
+        return;
+      }
+
+      // Validate email address
+      if (!validateEmailAddress(deliveryEmailAddress)) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+
+      // Validate pincode
+      if (!validatePincode(deliveryPincode)) {
+        alert('Please enter a valid pincode.');
+        return;
+      }
+
+      // Validate city and state
+      if (!validateCityState(deliveryCity, deliveryState)) {
+        alert('Please enter a valid city and state.');
+        return;
+      }
+
+      // Update the delivery address input field with the selected address details
+      deliveryAddressInput.value =
+        deliveryFlatHousing + ', ' + deliveryAreaStreet + ', ' + deliveryPincode + ', ' + deliveryCity + ', ' + deliveryState;
+
+      // Close the delivery address overlay
+      closeDeliveryOverlay();
+    }
+
+    // Attach event listeners
+    nextButton.addEventListener('click', handleNextButtonClick);
+    pickupAddressInput.addEventListener('click', showPickupOverlay);
+    addPickupAddressBtn.addEventListener('click', addPickupAddress);
+    cancelPickupBtn.addEventListener('click', closePickupOverlay);
+    deliveryAddressInput.addEventListener('click', showDeliveryOverlay);
+    addDeliveryAddressBtn.addEventListener('click', addDeliveryAddress);
+    cancelDeliveryBtn.addEventListener('click', closeDeliveryOverlay);
+  });
+
+
+
+
+  // const pickup_address_Form = document.getElementById('pickup-address-form');
+  // pickup_address_Form.addEventListener('submit', function(event) {
+  //     // Prevents the default form submission
+  //     event.preventDefault();
+  
+  //     // Get the form data
+  //     const formData = new FormData(signupForm);
+  
+  //     // Make an AJAX request to the PHP script
+  //     const xhr = new XMLHttpRequest();
+  //     xhr.open("POST", "signup.php", true);
+  //     xhr.onreadystatechange = function() {
+  //       if (xhr.readyState === 4 && xhr.status === 200) {
+  //         // Handle the response from signup.php
+  //         console.log(xhr.responseText); // You can remove this line once it's working
+  
+  //         // Redirect to login.html
+  //         window.location.href = 'login.html';
+  //       }
+  //     };
+  //     xhr.send(formData);
+  //   });
+    
+</script>
+</body>
+</html>
+

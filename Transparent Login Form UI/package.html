@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Package Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .sequence {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      font-weight: bold;
+      flex: 1;
+    }
+
+    .sequence-item {
+      position: relative;
+      font-size: 14px;
+      color: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .sequence-item::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #ccc;
+      z-index: -1;
+    }
+
+    .sequence-item.current-sequence::before {
+      background-color: #4CAF50;
+    }
+
+    .sequence span {
+      margin-top: 50px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      gap: 20px;
+      padding: 20px;
+      align-items: stretch;
+    }
+
+    .left-section {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      width: 400px;
+      flex: 1;
+      box-sizing: border-box;
+      height: 400px;
+    }
+
+    .left-section h2 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .left-section ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .left-section li {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .package-input input[type="text"],
+    .package-input input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-top: 5px;
+      margin-bottom: 15px;
+    }
+
+    .tick-mark {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #4CAF50;
+      margin-right: 10px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .right-section {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      width: 400px;
+      flex: 1;
+      box-sizing: border-box;
+      height: 400px;
+    }
+
+    .right-section h2 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+         .right-section ul {
+        list-style-type: none;
+        padding-left: 0;
+      }
+
+      .navbar,
+.container,
+.left-section,
+.right-section {
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px;
+}
+
+      .next-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+
+      .package-input select {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-top: 5px;
+        margin-bottom: 15px;
+      }
+
+      .package-input label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      /* CSS styles for buttons and package size message */
+      .package-input .package-size-buttons {
+        display: flex;
+        gap: 10px;
+      }
+
+      .package-input .package-size-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #ccc;
+        border: none;
+        cursor: pointer;
+      }
+
+      .package-input .package-size-btn.active {
+        background-color: #4CAF50;
+        color: white;
+      }
+
+      #package-size-message {
+        margin-top: 10px;
+        font-weight: bold;
+      }
+
+      /* CSS styles for the category popup */
+      .category-popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .category-popup-content {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        width: 300px;
+        max-height: 400px;
+        overflow-y: auto;
+      }
+
+      .category-popup-content h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .category-popup-content label {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      .category-popup-content button {
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+
+      .datepicker {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .datepicker-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn-date {
+        background-color: #f0f0f0;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        font-size: 14px;
+        color: #333;
+        cursor: pointer;
+      }
+
+      .date-green {
+        background-color: #4CAF50;
+        color: #fff;
+      }
+
+      .date-red {
+        background-color: #FF5722;
+        color: #fff;
+      }
+
+      .date-selected {
+        background-color: #2196F3;
+        color: #fff;
+      }
+
+      .date-range {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-top: 10px;
+      }
+
+      .date-range input {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      .date-range button {
+        padding: 10px 20px;
+        font-size: 14px;
+        font-weight: bold;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      .error-message {
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+      
+    #proceed-btn {
+  display: none;
+  padding: 10px 20px;
+  outline: none;
+  box-shadow: none;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 60px;
+  height: 45px;
+}
+.date-selected {
+  background-color: #4CAF50;
+  color: #fff;
+}
+.btn-date.active {
+  background-color: #4CAF50;
+  color: #ffffff;
+}
+#order-summary {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  max-width: 80%;
+  width: 400px;
+}
+
+.order-summary-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.order-summary-label {
+  font-weight: bold;
+  display: inline-block;
+  width: 120px;
+  font-size: 18px;
+}
+
+.order-summary-value {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.order-summary-button {
+  background-color: #337ab7;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 20px auto;
+  display: block;
+}
+
+.order-summary-button:hover {
+  background-color: #23527c;
+}
+
+.order-summary-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #888;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.order-summary-close:hover {
+  color: #555;
+}
+#confirm-payment-btn {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 20px auto;
+  display: block;
+}
+
+#confirm-payment-btn:hover {
+  background-color: #45a049;
+}
+</style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="logo">
+      <img src="loginbg.jpeg" alt="Logo">
+      <h1>PACKAGE</h1>
+    </div>
+    <div class="sequence">
+      <div class="sequence-item"><span>ADDRESS</span></div>
+      <div class="sequence-item current-sequence"><span>PACKAGE</span></div>
+      <div class="sequence-item"><span>SCHEDULE</span></div>
+      <div class="sequence-item"><span>SUMMARY</span></div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="left-section">
+      <h2>Package Details</h2>
+      <form method="POST" action="package.php">
+        <div class="package-input">
+          <label>Choose Package Size:</label>
+          <div class="package-size-buttons">
+            <button class="package-size-btn" data-package-size="extra-small" name="package_size">Extra Small</button>
+            <button class="package-size-btn" data-package-size="small" name="package_size">Small</button>
+            <button class="package-size-btn" data-package-size="medium" name="package_size">Medium</button>
+            <button class="package-size-btn" data-package-size="large" name="package_size">Large</button>
+          </div>
+        </div>
+        <p id="package-size-message"></p>
+        <!-- Popup for selecting category -->
+        <div class="category-popup" id="category-popup">
+          <div class="category-popup-content">
+            <h2>Select Category</h2>
+            <label><input type="checkbox" name="category[]" value="Apparel & accessories">Apparel &amp; accessories</label>
+            <label><input type="checkbox" name="category[]" value="Automotives">Automotives</label>
+            <label><input type="checkbox" name="category[]" value="Baby Care">Baby Care</label>
+            <label><input type="checkbox" name="category[]" value="Books & Stationery">Books &amp; Stationery</label>
+            <label><input type="checkbox" name="category[]" value="Consumables/FMCG">Consumables/FMCG</label>
+            <label><input type="checkbox" name="category[]" value="Covid - 19 Essentials">Covid - 19 Essentials</label>
+            <label><input type="checkbox" name="category[]" value="Documents">Documents</label>
+            <label><input type="checkbox" name="category[]" value="Electronics">Electronics</label>
+            <label><input type="checkbox" name="category[]" value="Household Items">Household Items</label>
+            <label><input type="checkbox" name="category[]" value="Sports Equipments">Sports Equipments</label>
+            <button type="button" id="category-popup-submit">Done</button>
+          </div>
+        </div>
+        <div class="package-input">
+          <label for="sub-category"> Select Category:</label>
+          <input type="text" id="sub-category" name="package_category" placeholder="Choose category" required>
+        </div>
+        <div class="package-input">
+          <input type="checkbox" id="secure-package" name="secure_package">
+          <label for="secure-package">Secure your package for just ₹100</label>
+        </div>
+        <div class="package-input">
+          <label for="package-value">Enter package value:</label>
+          <input type="text" id="package-value" name="package_value" placeholder="Enter package value (₹)" required>
+        </div>
+        <button type="button" id="next-btn" class="next-btn">Next</button>
+        <div class="container" id="container"></div>
+        <button type="submit" id="proceed-btn" class="proceed-btn">Proceed</button>
+      </form>
+    </div>
+    <div id="available-dates" style="display: none;" name="pickup_date"></div>
+  </div>
+
+  <div id="schedule">
+    <div class="schedule-circle"></div>
+  </div>
+
+    <!-- Order Summary Section -->
+    <div id="order-summary">
+      <span class="order-summary-close">&times;</span>
+      <h2 class="order-summary-title">Order Summary</h2>
+      <div>
+        <span class="order-summary-label">Country:</span>
+        <span id="order-summary-country" class="order-summary-value"></span>
+      </div>
+      <div>
+        <span class="order-summary-label">Pickup Pincode:</span>
+        <span id="order-summary-pickup-pincode" class="order-summary-value"></span>
+      </div>
+      <div>
+        <span class="order-summary-label">Delivery Pincode:</span>
+        <span id="order-summary-delivery-pincode" class="order-summary-value"></span>
+      </div>
+      <div>
+        <span class="order-summary-label">Pickup Address:</span>
+        <span id="order-summary-pickup-address" class="order-summary-value"></span>
+      </div>
+      <div>
+        <span class="order-summary-label">Delivery Address:</span>
+        <span id="order-summary-delivery-address" class="order-summary-value"></span>
+      </div>
+      <div>
+        <span class="order-summary-label">Mobile Number:</span>
+        <span id="order-summary-mobile-number" class="order-summary-value"></span>
+      </div>
+      <div>
+        <span class="order-summary-label">Package Size:</span>
+        <span class="order-summary-value" id="package-size-summary"></span>
+      </div>
+      <div>
+        <span class="order-summary-label">Category:</span>
+        <span id="order-summary-category" class="order-summary-value"></span>
+      </div>
+      <div>
+        <span class="order-summary-label">Package Value:</span>
+        <span id="order-summary-package-value" class="order-summary-value"></span>
+      </div>
+      <div>
+        <span class="order-summary-label">Pickup Date:</span>
+        <span id="order-summary-pickup-date" class="order-summary-value"></span>
+      </div>
+      <div id="order-summary-payment" class="order-summary-section">
+        <h3>Payment Details</h3>
+        <div class="payment-details">
+          <div>
+            <span>Courier Charges:</span>
+            <span id="order-summary-courier-charges"></span>
+          </div>
+          <div>
+            <span>Shipping Charges:</span>
+            <span id="order-summary-shipping-charges"></span>
+          </div>
+          <div>
+            <span>Total Payment:</span>
+            <span id="order-summary-total-payment"></span>
+          </div>
+        </div>
+      </div>
+      <button id="confirm-payment-btn" class="order-summary-button">Confirm Payment</button>
+    </div>
+
+    <!-- Add the Proceed button here -->
+  </div>
+  <script src="package.js">
+  </script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+  $(document).ready(function() {
+    // Handle the Next button click event
+    $('#proceed-btn').click(function() {
+      // Get the form data
+      var packageSize = $('.package-size-btn.active').data('package-size');
+      var packageCategory = $('input[name="category[]"]:checked').map(function() {
+  return this.value;
+}).get();
+
+      var packageValue = $('#package-value').val();
+      var packagePickupDate = $('.btn-date.active').text();
+      // Create an object to store the data
+      var formData = {
+        package_size: packageSize,
+        package_category: packageCategory,
+        package_value: packageValue,
+        package_pickup_date:packagePickupDate,
+      };
+
+      // Send the data to the PHP file using AJAX
+      $.ajax({
+        type: 'POST',
+        url: 'package.php',
+        data: formData,
+        success: function(response) {
+          // Handle the response from the PHP file
+          console.log(response);
+          // Redirect to the next page or perform any other desired actions
+        },
+        error: function(xhr, status, error) {
+          console.log('Error:', error);
+        }
+      });
+    });
+  });
+  </script>
+  <script>
+  document.getElementById('next-btn').addEventListener('click', function() {
+    // Fetch and store the data from the tables
+    var packageSize = document.querySelector('.package-size-btn.active').getAttribute('data-package-size');
+    var category = document.getElementById('sub-category').value;
+    var securePackage = document.getElementById('secure-package').checked;
+    var packageValue = document.getElementById('package-value').value;
+  
+    // Populate the order summary section with the fetched data
+    document.getElementById('order-summary-package-size').textContent = packageSize;
+    document.getElementById('order-summary-category').textContent = category;
+    document.getElementById('order-summary-secure-package').textContent = securePackage ? 'Yes' : 'No';
+    document.getElementById('order-summary-package-value').textContent = packageValue;
+  
+    // Show the order summary overlay
+    document.getElementById('order-summary').style.display = 'block';
+  });
+</script>
+  
+</body>
+</html>
+</body>
+</html>

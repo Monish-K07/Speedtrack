@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Delhivery</title>
+  <style>
+    .container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+input[type="text"] {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+#schedule {
+  margin-bottom: 20px;
+}
+
+.schedule-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: lightgray;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.schedule-circle.selected {
+  background-color: green;
+}
+
+#summary {
+  margin-top: 20px;
+}
+
+#next-button {
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Address</h1>
+    <form id="address-form">
+      <input type="text" id="name" placeholder="Name">
+      <input type="text" id="address" placeholder="Address">
+      <input type="text" id="city" placeholder="City">
+      <input type="text" id="postal-code" placeholder="Postal Code">
+    </form>
+
+    <h1>Package</h1>
+    <form id="package-form">
+      <input type="text" id="weight" placeholder="Weight">
+      <input type="text" id="dimensions" placeholder="Dimensions">
+    </form>
+
+    <h1>Schedule</h1>
+    <div id="schedule">
+      <div class="schedule-circle"></div>
+    </div>
+
+    <h1>Summary</h1>
+    <div id="summary">
+      <p><strong>Name:</strong> <span id="summary-name"></span></p>
+      <p><strong>Address:</strong> <span id="summary-address"></span></p>
+      <p><strong>City:</strong> <span id="summary-city"></span></p>
+      <p><strong>Postal Code:</strong> <span id="summary-postal-code"></span></p>
+      <p><strong>Weight:</strong> <span id="summary-weight"></span></p>
+      <p><strong>Dimensions:</strong> <span id="summary-dimensions"></span></p>
+    </div>
+
+    <button id="next-button">Next</button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+  const addressForm = document.querySelector('#address-form');
+  const packageForm = document.querySelector('#package-form');
+  const scheduleCircle = document.querySelector('.schedule-circle');
+  const summaryName = document.querySelector('#summary-name');
+  const summaryAddress = document.querySelector('#summary-address');
+  const summaryCity = document.querySelector('#summary-city');
+  const summaryPostalCode = document.querySelector('#summary-postal-code');
+  const summaryWeight = document.querySelector('#summary-weight');
+  const summaryDimensions = document.querySelector('#summary-dimensions');
+  const nextButton = document.querySelector('#next-button');
+
+  nextButton.addEventListener('click', function(event) {
+    event.preventDefault();
+
+    // Get form values
+    const name = document.querySelector('#name').value;
+    const address = document.querySelector('#address').value;
+    const city = document.querySelector('#city').value;
+    const postalCode = document.querySelector('#postal-code').value;
+    const weight = document.querySelector('#weight').value;
+    const dimensions = document.querySelector('#dimensions').value;
+
+    // Update summary
+    summaryName.textContent = name;
+    summaryAddress.textContent = address;
+    summaryCity.textContent = city;
+    summaryPostalCode.textContent = postalCode;
+    summaryWeight.textContent = weight;
+    summaryDimensions.textContent = dimensions;
+
+    // Select schedule circle
+    scheduleCircle.classList.add('selected');
+  });
+});
+
+  </script>
+</body>
+</html>
